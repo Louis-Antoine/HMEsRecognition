@@ -7,10 +7,8 @@ from torchvision import datasets, transforms
 from torch import nn, optim
 from NumDataset import NumbersDataset
 
-transform = transforms.Compose([transforms.Grayscale(num_output_channels=1), transforms.ToTensor(),transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
 trainingSet = NumbersDataset()
-trainingSet.tranform = transforms.Compose([transforms.Grayscale(num_output_channels=1), transforms.ToTensor(),transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 valuesSet = NumbersDataset() #test set (same as training set for now)
 trainingLoader = torch.utils.data.DataLoader(trainingSet, batch_size=64, shuffle=True)
 valueLoader = torch.utils.data.DataLoader(valuesSet, batch_size=64, shuffle=True)
