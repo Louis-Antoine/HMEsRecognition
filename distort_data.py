@@ -3,8 +3,6 @@ import glob
 import cv2
 import os
 
-from torch import rand
-
 def distortData(org_img_path, mod_img_path, iterations = 5):
     file_list = glob.glob(org_img_path + "*")
 
@@ -54,7 +52,7 @@ def distortData(org_img_path, mod_img_path, iterations = 5):
                 # cv2.waitKey()
                 cv2.imwrite(mod_img_path + class_name + "/" + class_name + "_" + str(index) + "_" + str(i+1) + ".jpg", distorted_image)
 
-        print("distorted " + str(index) + " " + class_name)
+        print("distorted " + str(index) + " " + class_name + "images")
 
 def applyShrink(image, shrink_factor):
     width, height = image.shape[1], image.shape[0]
