@@ -35,7 +35,7 @@ def extract_tokens(img):
             isStarted = False
             token = torch.index_select(img, 2, torch.tensor(list(range(left, right+1))))
             print(left, right)
-            print(token)
+            #print(token)
             tokens.append(adjust_height(token))
 
     return tokens
@@ -49,7 +49,7 @@ transform = transforms.Compose([transforms.Grayscale(num_output_channels=1) ,tra
 
 img_tensor = transform(image)
 torch.set_printoptions(threshold=10_000)
-print([float(i[0]) for i in img_tensor[0]])
+#print([float(i[0]) for i in img_tensor[0]])
 
 img_tensor = adjust_height(img_tensor)
 
@@ -62,10 +62,36 @@ tokens = extract_tokens(img_tensor)
 
 fig, axs = plt.subplots(figsize=(6,9), ncols=len(tokens))
 index = 0
+
+model = torch.load('model1.pt')
+
+answers = [0,1,2,3,4,5,6,7,8,9,'-','+','=','x','÷']
+
+
+
 for t in tokens:
+    
+    transform = transforms.Compose([transforms.Resize((45,45)),transforms.ToPILImage(), transforms.Grayscale(num_output_channels=1), transforms.RandomInvert(1) ,transforms.ToTensor(),transforms.Normalize((0.5,), (0.5,))])
+    t = transform(t)
     img = t.view(1,len(t[0]),len(t[0][0]))
-    axs[index].imshow(img.numpy().squeeze(), cmap='gray')
+
+    digit = t.view(1, 45**2)
+    with torch.no_grad():
+        logps = model(digit)
+
+    # Output of the network are log-probabilities, need to take exponential for probabilities
+    ps = torch.exp(logps)
+    probab = list(ps.numpy()[0])
+    print(probab)
+    predicted_digit = answers[probab.index(max(probab))]
+    print("Predicted Digit =", predicted_digit)
+
+    axs[index].imshow(img.numpy().squeeze(), cmap='gray_r')
+    axs[index].axes.minorticks_off()
+    axs[index].axes.yaxis.set_visible(False)
+    axs[index].set_xlabel(predicted_digit)
     index+=1
+
 
 
 plt.show()
