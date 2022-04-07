@@ -3,27 +3,27 @@ import glob
 import cv2
 import os
 
-def distortData(org_img_path, mod_img_path, iterations = 5):
-    file_list = glob.glob(org_img_path + "*")
+def distortData(input_data_path, output_data_path, iterations = 5, shrink_c = 0.15, shear_c = 0.1, rotation_c = 10, perspective_c = 0.05):
+    file_list = glob.glob(input_data_path + "*")
 
     # create dir if it doesnt exist
-    if not os.path.exists(mod_img_path):
-        os.makedirs(mod_img_path)
+    if not os.path.exists(output_data_path):
+        os.makedirs(output_data_path)
 
     # for each class in data
     for class_path in file_list:
         class_name = class_path.split("\\")[-1]
 
         # create class dir if it doesnt exist
-        if not os.path.exists(mod_img_path + class_name):
-            os.makedirs(mod_img_path + class_name)
+        if not os.path.exists(output_data_path + class_name):
+            os.makedirs(output_data_path + class_name)
         
         # for each image in class
         for index, img_path in enumerate(glob.glob(class_path + "\*.jpg"), 1):
             origin_image = cv2.imread(img_path, cv2.COLOR_RGB2GRAY)
 
             # write original image
-            cv2.imwrite(mod_img_path + class_name + "/" + class_name + "_" +str(index) + "_0.jpg", origin_image)
+            cv2.imwrite(output_data_path + class_name + "/" + class_name + "_" +str(index) + "_0.jpg", origin_image)
 
             for i in range(iterations):
                 # randomly decide transforms with 4/7 chance to not transform twice
@@ -37,22 +37,23 @@ def distortData(org_img_path, mod_img_path, iterations = 5):
             
                 for id in (first_transform_id, second_transform_id):
                     if id == 0: # shrink
-                        distorted_image = applyShrink(origin_image, np.random.uniform(0.85, 1.15))
+                        distorted_image = applyShrink(distorted_image, np.random.uniform(1 - shrink_c, 1 + shrink_c))
 
                     elif id == 1: # shear
-                        distorted_image = applyShear(origin_image, np.random.uniform(0.9, 1.1), np.random.uniform(0.9, 1.1))
+                        distorted_image = applyShear(distorted_image, np.random.uniform(1 - shear_c, 1 + shear_c), 
+                                                                      np.random.uniform(1 - shear_c, 1 + shear_c))
 
                     elif id == 2: # rotate
-                        distorted_image = applyRotation(origin_image, np.random.uniform(-10, 10))
+                        distorted_image = applyRotation(distorted_image, np.random.uniform(- rotation_c, rotation_c))
 
                     elif id == 3: # perspective
-                        distorted_image = applyPerspective(origin_image, np.random.uniform(0.95, 1.05), np.random.uniform(0.95, 1.05))
+                        distorted_image = applyPerspective(distorted_image, np.random.uniform(1 - perspective_c, 1 + perspective_c), 
+                                                                            np.random.uniform(1 - perspective_c, 1 + perspective_c))
 
                 # cv2.imshow(class_name, distorted_image)
                 # cv2.waitKey()
-                cv2.imwrite(mod_img_path + class_name + "/" + class_name + "_" + str(index) + "_" + str(i+1) + ".jpg", distorted_image)
-
-        print("distorted " + str(index) + " " + class_name + "images")
+                cv2.imwrite(output_data_path + class_name + "/" + class_name + "_" + str(index) + "_" + str(i+1) + ".jpg", distorted_image)
+        print("distorted " + str(index) + " " + class_name + " images")
 
 def applyShrink(image, shrink_factor):
     width, height = image.shape[1], image.shape[0]
