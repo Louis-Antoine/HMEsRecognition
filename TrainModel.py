@@ -9,9 +9,7 @@ from NumDataset import NumbersDataset
 
 
 trainingSet = NumbersDataset()
-testingSet = NumbersDataset() #test set (same as training set for now)
 trainingLoader = torch.utils.data.DataLoader(trainingSet, batch_size=64, shuffle=True)
-testingLoader = torch.utils.data.DataLoader(testingSet, batch_size=64, shuffle=True)
 
 input_size = 45**2 #45**2 neurons for first layer since images are 45x45 
 hidden_sizes = [128, 64] #hidden layers

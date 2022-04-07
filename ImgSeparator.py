@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 import torch
 from PIL import Image
 import torchvision.transforms as transforms
+import torch.nn.functional as F
 
 # Function to remove white space above and below an HME
 def adjust_height(img):
@@ -39,12 +40,22 @@ def extract_tokens(img):
             isStarted = False
             #create subset of image which is just one token
             token = torch.index_select(img, 2, torch.tensor(list(range(left, right+1))))
-            tokens.append(adjust_height(token)) #add compressed token to array
+            token = adjust_height(token)
+
+            #make image square
+            if len(token[0]) < len(token[0][0]):
+                pad = int((len(token[0][0]) - len(token[0])) /2)
+                #token = F.pad(token, (0,0, pad, pad), "constant", 1)
+            elif len(token[0]) > len(token[0][0]):
+                pad = int((len(token[0]) - len(token[0][0])) /2)
+                #token = F.pad(token, (pad, pad, 0, 0), "constant", 1)
+
+            tokens.append(token)
 
     return tokens
 
 
-image = Image.open('1.jpg') #load image
+image = Image.open('3.jpg') #load image
 
 #convert image to grayscale and transform to a Tensor 
 transform = transforms.Compose([transforms.Grayscale(num_output_channels=1) ,transforms.ToTensor()])
