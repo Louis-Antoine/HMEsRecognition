@@ -10,23 +10,27 @@ import torchvision.transforms as transforms
 def view_classify(img, ps):
     ''' Function for viewing an image and it's predicted classes.
     '''
+    
+    probab = list(ps.numpy()[0])
+    top3 = (np.argsort(probab)[-3:])
+
     ps = ps.data.numpy().squeeze()
     print(np.where(ps == max(ps))[0])
-    c = ['blue'] * 15
-    
+    c = ['blue'] * 3
+
+    bars = [ps[top3[2]], ps[top3[1]], ps[top3[0]]]
 
 
-    c[np.where(ps == max(ps))[0][0]] = 'red'
-    print(max(ps))
-    print(c)
+    c[0] = 'red'
 
-    fig, (ax1, ax2) = plt.subplots(figsize=(6,9), ncols=2)
+    fig, (ax1, ax2) = plt.subplots(figsize=(6,4), ncols=2)
     ax1.imshow(img.resize_(1, 45, 45).numpy().squeeze(), cmap='gray_r')
     ax1.axis('off')
-    ax2.bar(np.arange(15), ps, color=c)
+    ax2.bar(np.arange(3), bars, color=c)
     #ax2.set_aspect(max(ps))
-    ax2.set_xticks(np.arange(15))
-    ax2.set_xticklabels([0,1,2,3,4,5,6,7,8,9,'-','+','=','x','÷'])
+    ax2.set_xticks(np.arange(3))
+    symbols = [0,1,2,3,4,5,6,7,8,9,'-','+','=','x','÷']
+    ax2.set_xticklabels([symbols[top3[2]], symbols[top3[1]], symbols[top3[0]]])
     ax2.set_title('Class Probability')
     #ax2.set_ylim(0, max(ps) + 0.1)
     #plt.tight_layout()
@@ -44,7 +48,7 @@ transform = transforms.Compose([transforms.Grayscale(num_output_channels=1), tra
 img_tensor = transform(image)
   
 # print the converted Torch tensor
-print(img_tensor)
+#print(img_tensor)
 
 
 img = img_tensor.view(1, 45**2)

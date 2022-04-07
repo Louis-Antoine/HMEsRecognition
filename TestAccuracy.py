@@ -8,7 +8,7 @@ testingSet = TestingDataset()
 testingLoader = torch.utils.data.DataLoader(testingSet, batch_size=64, shuffle=True)
 
 #load model
-model = torch.load('model1.pt')
+model = torch.load('model.pt')
 
 #keep track of accuracy
 correct = 0
