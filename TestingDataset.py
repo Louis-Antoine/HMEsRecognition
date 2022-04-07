@@ -5,7 +5,7 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-class NumbersDataset(Dataset):
+class TestingDataset(Dataset):
     def __init__(self):
         self.imgs_path = "testing_data/"
         file_list = glob.glob(self.imgs_path + "*")
