@@ -45,10 +45,10 @@ def extract_tokens(img):
             #make image square
             if len(token[0]) < len(token[0][0]):
                 pad = int((len(token[0][0]) - len(token[0])) /2)
-                #token = F.pad(token, (0,0, pad, pad), "constant", 1)
+                token = F.pad(token, (0,0, pad, pad), "constant", 1)
             elif len(token[0]) > len(token[0][0]):
                 pad = int((len(token[0]) - len(token[0][0])) /2)
-                #token = F.pad(token, (pad, pad, 0, 0), "constant", 1)
+                token = F.pad(token, (pad, pad, 0, 0), "constant", 1)
 
             tokens.append(token)
 
