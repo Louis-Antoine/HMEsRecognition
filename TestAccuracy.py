@@ -32,4 +32,4 @@ for images,labels in testingLoader:
     total += 1
 
 print("Total number of images:", total)
-print("\nAccuracy: {}%".format(correct/total))
+print("\nAccuracy: {}%".format(100*(correct/total)))

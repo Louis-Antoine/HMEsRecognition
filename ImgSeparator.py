@@ -78,29 +78,6 @@ model = torch.load('model.pt')
 
 answers = [0,1,2,3,4,5,6,7,8,9,'-','+','=','x','÷']
 
-
-
-# for t in tokens:
-    
-#     #apply same transform as in dataset creation
-#     transform = transforms.Compose([transforms.Resize((45,45)),transforms.ToPILImage(), transforms.Grayscale(num_output_channels=1), transforms.RandomInvert(1) ,transforms.ToTensor(),transforms.Normalize((0.5,), (0.5,))])
-#     t = transform(t)
-#     img = t.view(1,len(t[0]),len(t[0][0]))
-
-#     #predict output
-#     digit = t.view(1, 45**2)
-#     with torch.no_grad():
-#         logps = model(digit)
-#     ps = torch.exp(logps)
-#     probab = list(ps.numpy()[0])
-#     predicted_digit = answers[probab.index(max(probab))]
-
-#     axs[index].imshow(img.numpy().squeeze(), cmap='gray_r')
-#     axs[index].axes.minorticks_off()
-#     axs[index].axes.yaxis.set_visible(False)
-#     axs[index].set_xlabel(predicted_digit)
-#     index+=1
-
 height = 2* len(tokens) +3
 
 fig = plt.figure(figsize=(6,9))
