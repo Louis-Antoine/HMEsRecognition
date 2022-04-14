@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+from sklearn import metrics
 
 from TestingDataset import TestingDataset
 
@@ -8,11 +9,13 @@ testingSet = TestingDataset()
 testingLoader = torch.utils.data.DataLoader(testingSet, batch_size=64, shuffle=True)
 
 #load model
-model = torch.load('model.pt')
+model = torch.load('model_original.pt')
 
 #keep track of accuracy
 correct = 0
 total = 0
+pred = []
+truth = []
 
 for images,labels in testingLoader:
   for i in range(len(labels)):
@@ -25,6 +28,10 @@ for images,labels in testingLoader:
     probab = list(ps.numpy()[0])
     prediction = probab.index(max(probab))
     actual = labels.numpy()[i]
+
+    pred.append(str(prediction))
+    truth.append(str(actual))
+
     #check if prediction is correct
     if(prediction == actual):
       correct += 1
@@ -33,3 +40,9 @@ for images,labels in testingLoader:
 
 print("Total number of images:", total)
 print("\nAccuracy: {}%".format(100*(correct/total)))
+
+# Print the confusion matrix
+print(metrics.confusion_matrix(truth, pred))
+
+# Print the precision and recall, among other metrics
+print(metrics.classification_report(truth, pred, digits=3))
