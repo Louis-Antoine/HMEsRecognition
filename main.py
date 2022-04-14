@@ -25,7 +25,7 @@ def main():
             distortData(input_data_path, output_data_path)
 
         elif key_in == "2":
-            trainModel(output_data_path, epochs = 10, output_file_name = "model_crossentropy.pt")
+            trainModel(output_data_path, epochs = 10, output_file_name = "model.pt")
     
         elif key_in == "3":
             pass

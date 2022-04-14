@@ -23,7 +23,7 @@ def trainModel(input_path = "distorted_data/", epochs = 10, output_file_name = "
                         nn.Linear(hidden_sizes[1], output_size),
                         nn.LogSoftmax(dim=1))
 
-    criterion = nn.CrossEntropyLoss
+    criterion = nn.CrossEntropyLoss()
     
     x = []
     y = []
