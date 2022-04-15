@@ -1,5 +1,8 @@
+from matplotlib import testing
 from distortData import distortData
 from TrainModel import trainModel
+from HME_Prediction import PredictHME
+from TestAccuracy import TestMetrics
 
 def main():
     input_data_path = "original_data/"
@@ -14,8 +17,8 @@ def main():
         print(" x - exit")
         print(" 1 - Distort Data")
         print(" 2 - Train Data")
-        print(" 3 - Test Data")
-        print(" 4 - Load Model")
+        print(" 3 - Test Model")
+        print(" 4 - HME Recognition")
         print(" 5 - change input path")
         print(" 6 - change output path")
         print("Input: ", end="")
@@ -28,10 +31,33 @@ def main():
             trainModel(output_data_path, epochs = 10, output_file_name = "model.pt")
     
         elif key_in == "3":
-            pass
+            print('-- Choose which model to test --')
+            print(" 1 - Negative log loss criterion function (with distorted data)")
+            print(" 2 - Cross entropy loss criterion function (with distorted data)")
+            print(" 3 - Negative log loss criterion function (no distorted data)")
+            print(" x - exit")
+
+            key_in = input()
+            model = 'model.pt'
+            isTest = True
+
+            if key_in == '1':
+                pass
+            elif key_in == '2':
+                model = 'model_crossentropy.pt'
+            elif key_in == '3':
+                model = 'model_original.pt'
+            elif key_in == 'x':
+                isTest = False
+            else:
+                print('Incorrect input. Using default NLL model')
+
+            if isTest:
+                TestMetrics(model)
+
 
         elif key_in == "4":
-            pass
+            PredictHME()
 
         elif key_in == "5":
             input_data_path = input()
