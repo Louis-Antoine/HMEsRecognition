@@ -1,3 +1,8 @@
+"""
+Main class
+Contains a command-line interface to run everything needed
+"""
+
 from matplotlib import testing
 from distortData import distortData
 from TrainModel import trainModel

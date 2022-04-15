@@ -1,3 +1,7 @@
+"""
+Neural network to classify math symbols
+"""
+
 import numpy as np
 import torch
 import matplotlib.pyplot as plt

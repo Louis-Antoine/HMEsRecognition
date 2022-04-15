@@ -1,3 +1,7 @@
+"""
+Create additional, distorted data from base data set
+"""
+
 import numpy as np
 import glob
 import cv2

@@ -1,3 +1,7 @@
+"""
+GUI to visualize an HME prediction
+"""
+
 from tkinter import *
 from matplotlib import pyplot as plt 
 from matplotlib.figure import Figure

@@ -1,3 +1,8 @@
+"""
+Class to create custom pytorch Dataset object for testing
+Created using the following guide: https://medium.com/analytics-vidhya/creating-a-custom-dataset-and-dataloader-in-pytorch-76f210a1df5d
+"""
+
 import glob
 import cv2
 import numpy as np

@@ -1,3 +1,7 @@
+"""
+Test precision, recall, f1 & accuracy of model
+"""
+
 import numpy as np
 import torch
 from sklearn import metrics
