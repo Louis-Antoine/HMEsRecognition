@@ -6,7 +6,7 @@ from torchvision import datasets, transforms
 from torch import nn, optim
 from NumDataset import NumbersDataset
 
-def trainModel(input_path = "distorted_data/", epochs = 10, output_file_name = "model.pt"):
+def trainModel(input_path = "distorted_data/", epochs = 10, output_file_name = "Trained_models/model.pt"):
     print("training " + input_path)
     trainingSet = NumbersDataset(input_path)
     batch = 64
@@ -23,7 +23,7 @@ def trainModel(input_path = "distorted_data/", epochs = 10, output_file_name = "
                         nn.Linear(hidden_sizes[1], output_size),
                         nn.LogSoftmax(dim=1))
 
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.NLLLoss()
     
     x = []
     y = []

@@ -67,7 +67,7 @@ def extract_tokens(img):
 
     return tokens
 
-def PredictHME(dir = '2.jpg'):
+def PredictHME(dir = 'Test_HMEs/2.jpg'):
 
     global image
     global model_select
@@ -82,9 +82,9 @@ def PredictHME(dir = '2.jpg'):
     window.geometry("1000x1000")
 
     model_options = [
-    "model.pt",
-    "model_original.pt",
-    "model_crossentropy.pt"
+    "Trained_models/model_NLL.pt",
+    "Trained_models/model_NLL_No-Distortion.pt",
+    "Trained_models/model_cross-entropy.pt"
     ]
 
     model_select = StringVar(window)

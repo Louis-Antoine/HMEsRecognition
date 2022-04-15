@@ -32,22 +32,23 @@ def main():
     
         elif key_in == "3":
             print('-- Choose which model to test --')
-            print(" 1 - Negative log loss criterion function (with distorted data)")
+            print(" 1 - Negative log likelihood loss criterion function (with distorted data)")
             print(" 2 - Cross entropy loss criterion function (with distorted data)")
-            print(" 3 - Negative log loss criterion function (no distorted data)")
+            print(" 3 - Negative log likelihood loss criterion function (no distorted data)")
             print(" x - exit")
 
             key_in = input()
-            model = 'model.pt'
+            model = 'Trained_models/model_NLL.pt'
             isTest = True
 
             if key_in == '1':
                 pass
             elif key_in == '2':
-                model = 'model_crossentropy.pt'
+                model = 'Trained_models/model_cross-entropy.pt'
             elif key_in == '3':
-                model = 'model_original.pt'
+                model = 'Trained_models/model_NLL_No-Distortion.pt'
             elif key_in == 'x':
+                key_in = ''
                 isTest = False
             else:
                 print('Incorrect input. Using default NLL model')
