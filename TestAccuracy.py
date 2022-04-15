@@ -49,3 +49,4 @@ def TestMetrics(m = 'model.pt'):
 
   # Print the precision and recall, among other metrics
   print(metrics.classification_report(truth, pred, digits=3))
+
